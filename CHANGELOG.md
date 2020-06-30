@@ -1,6 +1,13 @@
-# Change Log
+# Changelog
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
+
+## 9.1.0 (2020-06-30)
+
+
+### Features
+
+* initial public release ([c18acc9](https://github.com/labor-digital/typo3-page-layout-form-element/commit/c18acc93bde9f54d945382b2da2e7ec10ef8156e))
 
 ## 1.0.1 (2020-02-04)
 

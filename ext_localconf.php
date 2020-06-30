@@ -19,3 +19,4 @@
 
 betterExtConfig("LaborDigital." . $_EXTKEY,
     LaborDigital\Typo3PageLayoutFormElement\ExtConfig\PageLayoutFormElementExtConfig::class);
+
