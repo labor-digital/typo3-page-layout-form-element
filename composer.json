@@ -2,13 +2,25 @@
     "name": "labor-digital/typo3-page-layout-form-element",
     "type": "typo3-cms-extension",
     "description": "A TYPO3 Extension which allows to create backend form elements that allow a page layout for their content",
+    "license": "Apache-2.0",
     "authors": [
         {
-            "name": "LABOR GmbH",
-            "email": "info@labor.digital",
+            "name": "LABOR.digital",
+            "email": "info@labor.tools",
+            "homepage": "https://www.labor.digital",
+            "role": "Company"
+        },
+        {
+            "name": "Martin Neundorfer",
+            "email": "code@neunerlei.eu",
+            "homepage": "https://www.neunerlei.eu",
             "role": "Developer"
         }
     ],
+    "support": {
+        "issues": "https://github.com/labor-digital/typo3-page-layout-form-element/issues",
+        "source": "https://github.com/labor-digital/typo3-page-layout-form-element"
+    },
     "require": {
         "labor-digital/typo3-better-api": "*"
     },
