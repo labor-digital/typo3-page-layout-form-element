@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<xliff version="1.0">
+  <file source-language="en" datatype="plaintext" original="messages" date="2019-07-14T22:00:47Z" product-name="typo3_page_layout_form_element">
+    <header/>
+    <body>
+      <trans-unit id="backButtonLabel">
+        <source>Back to parent record</source>
+      </trans-unit>
+      <trans-unit id="noElementSaveFirstMessage">
+        <source>To edit the content elements of this field, save it at least once. After you saved you will find a button to edit your content elements, right here.</source>
+      </trans-unit>
+      <trans-unit id="clickOnButtonMessage">
+        <source>To edit the content elements of this field, click on the button below.</source>
+      </trans-unit>
+      <trans-unit id="editButtonLabel">
+        <source>Edit the content elements of this field</source>
+      </trans-unit>
+      <trans-unit id="doktype">
+        <source>Page Layout Form-Element Container</source>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>
