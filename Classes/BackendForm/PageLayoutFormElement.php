@@ -21,10 +21,11 @@ declare(strict_types=1);
 namespace LaborDigital\Typo3PageLayoutFormElement\BackendForm;
 
 
+use InvalidArgumentException;
 use LaborDigital\Typo3BetterApi\BackendForms\CustomElements\AbstractCustomElement;
 use LaborDigital\Typo3BetterApi\BackendForms\CustomElements\CustomElementContext;
 use LaborDigital\Typo3BetterApi\BackendForms\CustomElements\CustomElementFormActionContext;
-use LaborDigital\Typo3BetterApi\Container\CommonServiceDependencyTrait;
+use LaborDigital\Typo3BetterApi\Container\CommonDependencyTrait;
 use LaborDigital\Typo3BetterApi\Event\TypoEventBus;
 use LaborDigital\Typo3PageLayoutFormElement\Domain\Table\Override\PagesOverride;
 use LaborDigital\Typo3PageLayoutFormElement\Event\PageLayoutPageRowFilterEvent;
@@ -33,7 +34,7 @@ use Neunerlei\Inflection\Inflector;
 
 class PageLayoutFormElement extends AbstractCustomElement
 {
-    use CommonServiceDependencyTrait;
+    use CommonDependencyTrait;
     
     protected const TEMPLATE
         = <<<MUSTACHE
@@ -59,19 +60,23 @@ MUSTACHE;
         if ($hasPage) {
             // Has a page
             // Build edit content url
-            $url = $this->Links()->getBackendLink("web_layout", [
-                "args" => [
-                    "id"                => $pageId,
-                    "pageLayoutContent" => 1,
+            $url = $this->Links()->getBackendLink('web_layout', [
+                'args' => [
+                    'id'                => $pageId,
+                    'pageLayoutContent' => 1,
                 ],
             ]);
             
             $args = [
-                "url" => ["url" => $url],
+                'url' => ['url' => $url],
             ];
             
+            if ($this->TypoContext()->Request()->getRootRequest() === null) {
+                throw new InvalidArgumentException('There is currently no root-context');
+            }
+            
             $this->BackendSession()
-                 ->set("pageLayoutElementParentUrl",
+                 ->set('pageLayoutElementParentUrl',
                      (string)$this->TypoContext()->Request()->getRootRequest()->getUri());
             
         } else {
@@ -91,11 +96,11 @@ MUSTACHE;
         // Make sure we always have a page we can go to
         if (! $this->Page()->pageExists($this->pageIdFromValue($context->getValue()), true)) {
             // Prepare the storage pid
-            $defaultPid = $context->getRow()["pid"];
+            $defaultPid = $context->getRow()['pid'];
             if (empty($defaultPid) || ! is_int($defaultPid)) {
-                $defaultPid = $context->Pid;
+                $defaultPid = $this->TypoContext()->Pid()->getCurrent();
             }
-            $parentPid = $context->getOption("storagePid", $defaultPid);
+            $parentPid = $context->getOption('storagePid', $defaultPid);
             if ($parentPid < 0) {
                 $parentPid = $defaultPid;
             }
@@ -105,9 +110,9 @@ MUSTACHE;
             
             // Build page title
             $fieldLabel = $this->Translation()->translateMaybe(
-                (string)Arrays::getPath($context->getConfig(), ["label"], ""));
+                (string)Arrays::getPath($context->getConfig(), ['label'], ''));
             $tableLabel = $this->Translation()->translateMaybe(
-                (string)Arrays::getPath($GLOBALS, ["TCA", $context->getTableName(), "ctrl", "title"], ""));
+                (string)Arrays::getPath($GLOBALS, ['TCA', $context->getTableName(), 'ctrl', 'title'], ''));
             $title      = array_values(array_filter([$tableLabel, $fieldLabel]));
             if (empty($title)) {
                 $title = [
@@ -115,26 +120,26 @@ MUSTACHE;
                     Inflector::toHuman($context->getKey()),
                 ];
             }
-            $title[0] = "Content elements of: " . $title[0];
+            $title[0] = 'Content elements of: ' . $title[0];
             $title[]  = $context->getUid();
-            $title    = implode(" - ", $title);
+            $title    = implode(' - ', $title);
             
             // Make the new page array
-            $pageRow = Arrays::merge($context->getOption("addToPageRow", []), [
-                "form_element_parent" => 1,
-                "doktype"             => PagesOverride::PAGE_LAYOUT_DOK_TYPE,
-                "nav_hide"            => 1,
-                "backend_layout"      => "pagets__page_layout_form_element_content",
+            $pageRow = Arrays::merge($context->getOption('addToPageRow', []), [
+                'form_element_parent' => 1,
+                'doktype'             => PagesOverride::PAGE_LAYOUT_DOK_TYPE,
+                'nav_hide'            => 1,
+                'backend_layout'      => 'pagets__page_layout_form_element_content',
             ]);
             TypoEventBus::getInstance()
                         ->dispatch(($e = new PageLayoutPageRowFilterEvent($pageRow, $title, $context)));
             
             // Create the new page and set it as our value
-            $respectPermissions = $context->getOption("respectUserPermissions", false);
+            $respectPermissions = $context->getOption('respectUserPermissions', false);
             $newPageId          = $this->Page()->createNewPage($parentPid, [
-                "force"   => ! $respectPermissions,
-                "title"   => $e->getTitle(),
-                "pageRow" => $e->getRow(),
+                'force'   => ! $respectPermissions,
+                'title'   => $e->getTitle(),
+                'pageRow' => $e->getRow(),
             ]);
             $context->setValue([$newPageId]);
         }
@@ -148,23 +153,23 @@ MUSTACHE;
     {
         // Ignore if there is somehow no page..
         $pageId = $this->pageIdFromValue($context->getValue());
-        if (! $this->Page()->pageExists($pageId, false, true)) {
+        if (! $this->Page()->pageExists($pageId, true)) {
             return;
         }
         
         // Handle the action
         switch ($context->getAction()) {
-            case "copy":
-                $newPid = $this->Page()->copyPage($pageId, ["force"]);
+            case 'copy':
+                $newPid = $this->Page()->copyPage($pageId, ['force']);
                 $context->setValue($newPid);
                 break;
-            case "move":
-                $this->Page()->movePage($pageId, (int)$context->getRow()["pid"], true);
+            case 'move':
+                $this->Page()->movePage($pageId, (int)$context->getRow()['pid'], true);
                 break;
-            case "delete":
+            case 'delete':
                 $this->Page()->deletePage($pageId, true);
                 break;
-            case "undelete":
+            case 'undelete':
                 $this->Page()->restorePage($pageId, true);
                 break;
         }
