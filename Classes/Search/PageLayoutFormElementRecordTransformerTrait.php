@@ -21,10 +21,10 @@ declare(strict_types=1);
 namespace LaborDigital\Typo3PageLayoutFormElement\Search;
 
 
+use LaborDigital\T3SAI\Builtin\Transformer\Page\PageContentGenerator;
+use LaborDigital\T3SAI\Indexer\IndexerContext;
 use LaborDigital\Typo3BetterApi\Container\TypoContainer;
 use LaborDigital\Typo3PageLayoutFormElement\Domain\Model\PageLayoutContent;
-use LaborDigital\Typo3SearchAndIndex\IndexGenerator\IndexGeneratorContext;
-use LaborDigital\Typo3SearchAndIndex\IndexGenerator\Page\PageContentGenerator;
 
 /**
  * Trait PageLayoutFormElementSearchTransformerTrait
@@ -34,7 +34,7 @@ use LaborDigital\Typo3SearchAndIndex\IndexGenerator\Page\PageContentGenerator;
  *
  * @package LaborDigital\Typo3PageLayoutFormElement\Search
  */
-trait PageLayoutFormElementSearchTransformerTrait
+trait PageLayoutFormElementRecordTransformerTrait
 {
     
     /**
@@ -47,9 +47,9 @@ trait PageLayoutFormElementSearchTransformerTrait
     /**
      * Inject the instance of the page content generator
      *
-     * @param   \LaborDigital\Typo3SearchAndIndex\IndexGenerator\Page\PageContentGenerator  $pageContentGenerator
+     * @param   \LaborDigital\T3SAI\Builtin\Transformer\Page\PageContentGenerator  $pageContentGenerator
      */
-    public function injectPageContentGenerator(PageContentGenerator $pageContentGenerator)
+    public function injectPageContentGenerator(PageContentGenerator $pageContentGenerator): void
     {
         $this->pageContentGenerator = $pageContentGenerator;
     }
@@ -61,22 +61,22 @@ trait PageLayoutFormElementSearchTransformerTrait
      *
      * @param   int|string|PageLayoutContent  $field    The value of the pageLayout field, or the instance of a
      *                                                  PageLayoutContent element
-     * @param   IndexGeneratorContext         $context  The indexer context to read the language from
+     * @param   IndexerContext                $context  The indexer context to read the language from
      *
      * @return string
      */
-    public function getPageLayoutContent($field, IndexGeneratorContext $context): string
+    public function getPageLayoutContent($field, IndexerContext $context): string
     {
         // Make sure we have the content element to work with
         if (! $field instanceof PageLayoutContent) {
             $field = TypoContainer::getInstance()->get(PageLayoutContent::class, [
                 "args" => [
-                    $context->getLanguage()->getUid(),
+                    $context->getLanguage()->getLanguageId(),
                     $field,
                 ],
             ]);
         }
         
-        return $this->pageContentGenerator->getContent($field->getPageUid(), $context);
+        return $this->pageContentGenerator->getContent($field->getPageUid(), time(), $context);
     }
 }
