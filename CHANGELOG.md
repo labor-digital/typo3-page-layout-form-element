@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [9.2.0](https://github.com/labor-digital/typo3-page-layout-form-element/compare/v9.1.1...v9.2.0) (2020-07-21)
+
+
+### Features
+
+* implement search ([1df9c6d](https://github.com/labor-digital/typo3-page-layout-form-element/commit/1df9c6d072d6f4661d045143b05df68a158c3581))
+* make more code type save + resolve deprecated dependencies ([ff0a1f7](https://github.com/labor-digital/typo3-page-layout-form-element/commit/ff0a1f74d03104838a4642102761234ca5c0e934))
+
 ### [9.1.1](https://github.com/labor-digital/typo3-page-layout-form-element/compare/v9.1.0...v9.1.1) (2020-06-30)
 
 ## 9.1.0 (2020-06-30)
