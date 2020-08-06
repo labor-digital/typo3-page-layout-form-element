@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [9.2.1](https://github.com/labor-digital/typo3-page-layout-form-element/compare/v9.2.0...v9.2.1) (2020-08-06)
+
+
+### Bug Fixes
+
+* **ExtendedTreeController:** make the class compatible with v9.5.20 ([13be236](https://github.com/labor-digital/typo3-page-layout-form-element/commit/13be236b55c12713497b0bdc49b003d596951cb9))
+
 ## [9.2.0](https://github.com/labor-digital/typo3-page-layout-form-element/compare/v9.1.1...v9.2.0) (2020-07-21)
 
 
