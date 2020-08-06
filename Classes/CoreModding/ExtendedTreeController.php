@@ -24,6 +24,8 @@ namespace LaborDigital\Typo3PageLayoutFormElement\CoreModding;
 
 
 use LaborDigital\Typo3PageLayoutFormElement\Domain\Table\Override\PagesOverride;
+use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\ServerRequestInterface;
 use TYPO3\CMS\Backend\Controller\Page\BetterApiClassOverrideCopy__TreeController;
 
 /**
@@ -38,7 +40,31 @@ class ExtendedTreeController extends BetterApiClassOverrideCopy__TreeController
     /**
      * @inheritDoc
      */
-    protected function getAllEntryPointPageTrees(int $startPid = 0, string $query = ''): array
+    public function fetchDataAction(ServerRequestInterface $request): ResponseInterface
+    {
+        return $this->applyDoktypeExclusionWrap(function () use ($request) {
+            return parent::fetchDataAction($request);
+        });
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function filterDataAction(ServerRequestInterface $request): ResponseInterface
+    {
+        return $this->applyDoktypeExclusionWrap(function () use ($request) {
+            return parent::filterDataAction($request);
+        });
+    }
+
+    /**
+     * Applies the additional doktype constraint
+     *
+     * @param   callable  $callback
+     *
+     * @return mixed
+     */
+    protected function applyDoktypeExclusionWrap(callable $callback)
     {
         // Hide our doktype in the page tree
         $backendUser = $this->getBackendUser();
@@ -47,21 +73,18 @@ class ExtendedTreeController extends BetterApiClassOverrideCopy__TreeController
         // Rewrite the excluded doktypes
         $excludedDokTypes = $userTsConfig['options.']['pageTree.']['excludeDoktypes'] ?? '';
         $excludedDokTypes .= ',' . PagesOverride::PAGE_LAYOUT_DOK_TYPE;
+        $excludedDokTypes = trim($excludedDokTypes, ',');
         $tsClone          = $tsBackup;
 
         $tsClone['options.']['pageTree.']['excludeDoktypes'] = $excludedDokTypes;
         BackendUserAdapter::setUserTs($backendUser, $tsClone);
 
-        // Build the result like normal
-        $result = parent::getAllEntryPointPageTrees($startPid, $query);
-
-        // Restore the user ts
-        BackendUserAdapter::setUserTs($backendUser, $tsBackup);
-        unset($tsBackup, $tsClone);
-
-        // Done
-        return $result;
+        try {
+            return $callback();
+        } finally {
+            // Restore the user ts
+            BackendUserAdapter::setUserTs($backendUser, $tsBackup);
+            unset($tsBackup, $tsClone);
+        }
     }
-
-
 }
