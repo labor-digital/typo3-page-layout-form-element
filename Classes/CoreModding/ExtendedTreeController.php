@@ -38,31 +38,30 @@ class ExtendedTreeController extends BetterApiClassOverrideCopy__TreeController
     /**
      * @inheritDoc
      */
-    protected function getAllEntryPointPageTrees(): array
+    protected function getAllEntryPointPageTrees(int $startPid = 0, string $query = ''): array
     {
         // Hide our doktype in the page tree
         $backendUser = $this->getBackendUser();
         $tsBackup    = $backendUser->getTSConfig();
-        
+
         // Rewrite the excluded doktypes
-        $excludedDokTypes = $userTsConfig['options.']['pageTree.']['excludeDoktypes']
-                            ?? '';
+        $excludedDokTypes = $userTsConfig['options.']['pageTree.']['excludeDoktypes'] ?? '';
         $excludedDokTypes .= ',' . PagesOverride::PAGE_LAYOUT_DOK_TYPE;
         $tsClone          = $tsBackup;
-        $tsClone['options.']['pageTree.']['excludeDoktypes']
-                          = $excludedDokTypes;
+
+        $tsClone['options.']['pageTree.']['excludeDoktypes'] = $excludedDokTypes;
         BackendUserAdapter::setUserTs($backendUser, $tsClone);
-        
+
         // Build the result like normal
-        $result = parent::getAllEntryPointPageTrees();
-        
+        $result = parent::getAllEntryPointPageTrees($startPid, $query);
+
         // Restore the user ts
         BackendUserAdapter::setUserTs($backendUser, $tsBackup);
         unset($tsBackup, $tsClone);
-        
+
         // Done
         return $result;
     }
-    
-    
+
+
 }
