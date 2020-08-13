@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [9.2.3](https://github.com/labor-digital/typo3-page-layout-form-element/compare/v9.2.2...v9.2.3) (2020-08-13)
+
+
+### Bug Fixes
+
+* **PageLayoutFormElement:** generate correct "back" url for newly created record forms ([35a75bc](https://github.com/labor-digital/typo3-page-layout-form-element/commit/35a75bc2df8805c6ccdd0de902b4601d293c2b09))
+* **PageTs:** remove the the backend layout from the list ([42eda5d](https://github.com/labor-digital/typo3-page-layout-form-element/commit/42eda5d5dd31a8d937a8dd69e97ae519e768b250))
+
 ### [9.2.2](https://github.com/labor-digital/typo3-page-layout-form-element/compare/v9.2.1...v9.2.2) (2020-08-06)
 
 
