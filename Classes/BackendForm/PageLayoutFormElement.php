@@ -35,7 +35,7 @@ use Neunerlei\Inflection\Inflector;
 class PageLayoutFormElement extends AbstractCustomElement
 {
     use CommonDependencyTrait;
-    
+
     protected const TEMPLATE
         = <<<MUSTACHE
 {{{hiddenField}}}
@@ -47,8 +47,8 @@ class PageLayoutFormElement extends AbstractCustomElement
 	{{translate "plfe.noElementSaveFirstMessage"}}
 {{/url}}
 MUSTACHE;
-    
-    
+
+
     /**
      * @inheritDoc
      */
@@ -56,7 +56,7 @@ MUSTACHE;
     {
         $pageId  = $this->pageIdFromValue($context->getValue());
         $hasPage = ! empty($pageId) && $this->Page()->pageExists($pageId, true);
-        
+
         if ($hasPage) {
             // Has a page
             // Build edit content url
@@ -66,28 +66,37 @@ MUSTACHE;
                     'pageLayoutContent' => 1,
                 ],
             ]);
-            
+
             $args = [
                 'url' => ['url' => $url],
             ];
-            
+
             if ($this->TypoContext()->Request()->getRootRequest() === null) {
                 throw new InvalidArgumentException('There is currently no root-context');
             }
-            
+
+            // Prepare uri -> This avoids broken redirects if the "back to record"
+            // link is clicked after a new record was created
+            $uri = (string)$this->TypoContext()->Request()->getRootRequest()->getUri();
+            if (strpos($uri, '=new') !== false) {
+                $uri = preg_replace(
+                    '/%5D[^=]*?=new(?:&|$)/',
+                    urlencode('][' . $context->getRecordUid() . ']') . '=edit&',
+                    $uri, 1);
+            }
+
             $this->BackendSession()
-                 ->set('pageLayoutElementParentUrl',
-                     (string)$this->TypoContext()->Request()->getRootRequest()->getUri());
-            
+                 ->set('pageLayoutElementParentUrl', $uri);
+
         } else {
             // Has no page
             $args = [];
         }
-        
+
         // Render the template
         return $this->renderTemplate(static::TEMPLATE, $args);
     }
-    
+
     /**
      * @inheritDoc
      */
@@ -107,7 +116,7 @@ MUSTACHE;
             if (is_null($parentPid)) {
                 $parentPid = $this->TypoContext()->Pid()->getCurrent();
             }
-            
+
             // Build page title
             $fieldLabel = $this->Translation()->translateMaybe(
                 (string)Arrays::getPath($context->getConfig(), ['label'], ''));
@@ -123,7 +132,7 @@ MUSTACHE;
             $title[0] = 'Content elements of: ' . $title[0];
             $title[]  = $context->getUid();
             $title    = implode(' - ', $title);
-            
+
             // Make the new page array
             $pageRow = Arrays::merge($context->getOption('addToPageRow', []), [
                 'form_element_parent' => 1,
@@ -133,7 +142,7 @@ MUSTACHE;
             ]);
             TypoEventBus::getInstance()
                         ->dispatch(($e = new PageLayoutPageRowFilterEvent($pageRow, $title, $context)));
-            
+
             // Create the new page and set it as our value
             $respectPermissions = $context->getOption('respectUserPermissions', false);
             $newPageId          = $this->Page()->createNewPage($parentPid, [
@@ -143,9 +152,9 @@ MUSTACHE;
             ]);
             $context->setValue([$newPageId]);
         }
-        
+
     }
-    
+
     /**
      * @inheritDoc
      */
@@ -156,7 +165,7 @@ MUSTACHE;
         if (! $this->Page()->pageExists($pageId, true)) {
             return;
         }
-        
+
         // Handle the action
         switch ($context->getAction()) {
             case 'copy':
@@ -174,7 +183,7 @@ MUSTACHE;
                 break;
         }
     }
-    
+
     /**
      * Internal helper to make sure we handle arrays and integers as values correctly
      *
