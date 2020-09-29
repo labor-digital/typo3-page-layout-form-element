@@ -34,9 +34,13 @@ class FormPageLayoutContentResourceTransformer extends AbstractResourceTransform
         /** @var \LaborDigital\Typo3PageLayoutFormElement\Domain\Model\PageLayoutContent $value */
         // Done
         return [
-            "id"       => $value->getPageUid(),
-            "children" => $this->autoTransform(
-                $this->getInstanceOf(ContentElementColumnList::class, [$value->getContents()])
+            'id'       => $value->getPageUid(),
+            'children' => $this->autoTransform(
+                $this->getInstanceOf(ContentElementColumnList::class, [
+                    $value->getPageUid(),
+                    $value->getContents(),
+                    $this->FrontendApiContext()->getLanguageCode(),
+                ])
             ),
         ];
     }
