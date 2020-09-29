@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [9.2.4](https://github.com/labor-digital/typo3-page-layout-form-element/compare/v9.2.3...v9.2.4) (2020-09-29)
+
+
+### Bug Fixes
+
+* **FormPageLayoutContentResourceTransformer:** make code compatible with new frontend api version ([f1e14b4](https://github.com/labor-digital/typo3-page-layout-form-element/commit/f1e14b4fbd74fa2a856e73b7e612449e903b8cc3))
+
 ### [9.2.3](https://github.com/labor-digital/typo3-page-layout-form-element/compare/v9.2.2...v9.2.3) (2020-08-13)
 
 
