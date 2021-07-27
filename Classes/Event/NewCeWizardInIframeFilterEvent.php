@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *
- * Last modified: 2021.07.23 at 16:20
+ * Last modified: 2021.07.23 at 16:48
  */
 
 declare(strict_types=1);
@@ -27,15 +27,13 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 
 /**
- * Class PageLayoutBackendOutputFilterEvent
+ * Class NewCeWizardInIframeFilterEvent
  *
- * Emitted in the PageLayoutFilterMiddleware to allow filtering of the responded
- * backend content if the page layout is rendered
- *
- * @package LaborDigital\T3plfe\Event
+ * @package LaborDigital\Typo3PageLayoutFormElement\Event
  */
-class PageLayoutBackendOutputFilterEvent
+class NewCeWizardInIframeFilterEvent
 {
+    
     /**
      * The http response to filter
      *
@@ -76,9 +74,9 @@ class PageLayoutBackendOutputFilterEvent
      *
      * @param   \Psr\Http\Message\ResponseInterface  $response
      *
-     * @return PageLayoutBackendOutputFilterEvent
+     * @return $this
      */
-    public function setResponse(ResponseInterface $response): PageLayoutBackendOutputFilterEvent
+    public function setResponse(ResponseInterface $response): self
     {
         $this->response = $response;
         

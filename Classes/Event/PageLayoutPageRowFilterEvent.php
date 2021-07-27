@@ -1,6 +1,6 @@
 <?php
-/**
- * Copyright 2020 LABOR.digital
+/*
+ * Copyright 2021 LABOR.digital
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,16 +14,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *
- * Last modified: 2020.06.30 at 12:39
+ * Last modified: 2021.07.23 at 10:03
  */
 
 declare(strict_types=1);
 
 
-namespace LaborDigital\Typo3PageLayoutFormElement\Event;
+namespace LaborDigital\T3plfe\Event;
 
-
-use LaborDigital\Typo3BetterApi\BackendForms\CustomElements\CustomElementFormActionContext;
 
 class PageLayoutPageRowFilterEvent
 {
@@ -42,34 +40,66 @@ class PageLayoutPageRowFilterEvent
     protected $title;
     
     /**
-     * The context used to generate the page
+     * The name of the parent table that contains the page layout field
      *
-     * @var \LaborDigital\Typo3BetterApi\BackendForms\CustomElements\CustomElementFormActionContext
+     * @var string
      */
-    protected $context;
+    protected $tableName;
+    
+    /**
+     * The absolute render name of the field inside of $tableName that is the page layout field
+     *
+     * @var string
+     */
+    protected $fieldRenderName;
+    
+    /**
+     * The record uid in $tableName that references the page layout field
+     *
+     * @var int
+     */
+    protected $recordUid;
+    
+    /**
+     * The pid that should contain the new content page
+     *
+     * @var int
+     */
+    protected $storagePid;
+    
+    /**
+     * The options provided for the layout field
+     *
+     * @var array
+     */
+    protected $options;
     
     /**
      * PageLayoutPageRowFilterEvent constructor.
      *
-     * @param   array                           $row
-     * @param   string                          $title
-     * @param   CustomElementFormActionContext  $context
+     * @param   array   $row
+     * @param   string  $title
+     * @param   string  $fieldRenderName
+     * @param   int     $recordUid
+     * @param   int     $storagePid
      */
-    public function __construct(array $row, string $title, CustomElementFormActionContext $context)
+    public function __construct(
+        array $row,
+        string $title,
+        string $tableName,
+        string $fieldRenderName,
+        int $recordUid,
+        int $storagePid,
+        array $options
+    )
     {
-        $this->row     = $row;
-        $this->title   = $title;
-        $this->context = $context;
-    }
-    
-    /**
-     * Returns the context used to generate the page
-     *
-     * @return \LaborDigital\Typo3BetterApi\BackendForms\CustomElements\CustomElementFormActionContext
-     */
-    public function getContext(): CustomElementFormActionContext
-    {
-        return $this->context;
+        $this->row = $row;
+        $this->title = $title;
+        $this->fieldRenderName = $fieldRenderName;
+        $this->recordUid = $recordUid;
+        $this->storagePid = $storagePid;
+        $this->tableName = $tableName;
+        $this->options = $options;
     }
     
     /**
@@ -118,5 +148,55 @@ class PageLayoutPageRowFilterEvent
         $this->title = $title;
         
         return $this;
+    }
+    
+    /**
+     * Returns the name of the parent table that contains the page layout field
+     *
+     * @return string
+     */
+    public function getTableName(): string
+    {
+        return $this->tableName;
+    }
+    
+    /**
+     * Returns the absolute render name of the field inside of $tableName that is the page layout field
+     *
+     * @return string
+     */
+    public function getFieldRenderName(): string
+    {
+        return $this->fieldRenderName;
+    }
+    
+    /**
+     * Return the record uid in $tableName that references the page layout field
+     *
+     * @return int
+     */
+    public function getRecordUid(): int
+    {
+        return $this->recordUid;
+    }
+    
+    /**
+     * The pid that should contain the new content page
+     *
+     * @return int
+     */
+    public function getStoragePid(): int
+    {
+        return $this->storagePid;
+    }
+    
+    /**
+     * Return the options provided for the layout field
+     *
+     * @return array
+     */
+    public function getOptions(): array
+    {
+        return $this->options;
     }
 }

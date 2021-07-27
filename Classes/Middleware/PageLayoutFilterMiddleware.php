@@ -1,6 +1,6 @@
 <?php
-/**
- * Copyright 2020 LABOR.digital
+/*
+ * Copyright 2021 LABOR.digital
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,19 +14,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *
- * Last modified: 2020.06.30 at 12:49
+ * Last modified: 2021.07.27 at 09:35
  */
 
 declare(strict_types=1);
 
 
-namespace LaborDigital\Typo3PageLayoutFormElement\Middleware;
+namespace LaborDigital\T3plfe\Middleware;
 
 
-use LaborDigital\Typo3BetterApi\Container\TypoContainer;
-use LaborDigital\Typo3BetterApi\Event\TypoEventBus;
-use LaborDigital\Typo3BetterApi\TypoContext\TypoContext;
-use LaborDigital\Typo3PageLayoutFormElement\Event\PageLayoutBackendOutputFilterEvent;
+use LaborDigital\T3plfe\Event\NewCeWizardInIframeFilterEvent;
+use LaborDigital\T3plfe\Event\PageLayoutBackendOutputFilterEvent;
+use Neunerlei\PathUtil\Path;
+use Psr\EventDispatcher\EventDispatcherInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\MiddlewareInterface;
@@ -34,23 +34,47 @@ use Psr\Http\Server\RequestHandlerInterface;
 
 class PageLayoutFilterMiddleware implements MiddlewareInterface
 {
+    public const PAGE_LAYOUT_REQUEST_MARKER = 'plfe_page_layout';
+    public const PAGE_LAYOUT_IFRAME_MARKER = 'plfe_iframe';
+    
+    /**
+     * @var \Psr\EventDispatcher\EventDispatcherInterface
+     */
+    protected $eventDispatcher;
+    
+    public function __construct(EventDispatcherInterface $eventDispatcher)
+    {
+        $this->eventDispatcher = $eventDispatcher;
+    }
     
     /**
      * @inheritDoc
      */
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
-        // Check if we have work to do
-        $context  = TypoContainer::getInstance()->get(TypoContext::class);
         $response = $handler->handle($request);
-        if (! $context->Request()->getGet('pageLayoutContent')) {
+        if (empty($request->getQueryParams()[static::PAGE_LAYOUT_REQUEST_MARKER])) {
+            // Special handling for new content element wizard
+            // If the return url is set, we check if it is executed in an iframe
+            $route = $request->getQueryParams()['route'] ?? null;
+            if ($route === '/record/content/wizard/new' && isset($request->getQueryParams()['returnUrl'])) {
+                $uri = Path::makeUri($request->getQueryParams()['returnUrl']);
+                parse_str($uri->getQuery(), $query);
+                if (empty($query[static::PAGE_LAYOUT_IFRAME_MARKER])) {
+                    return $response;
+                }
+                
+                return $this->eventDispatcher
+                    ->dispatch(new NewCeWizardInIframeFilterEvent($response, $request->withQueryParams($query)))
+                    ->getResponse();
+            }
+            
             return $response;
         }
         
-        // Allow filtering
-        TypoEventBus::getInstance()->dispatch(($e = new PageLayoutBackendOutputFilterEvent($response)));
-        
-        return $e->getResponse();
+        return $this->eventDispatcher
+            ->dispatch(new PageLayoutBackendOutputFilterEvent($response, $request))
+            ->getResponse();
     }
     
 }
