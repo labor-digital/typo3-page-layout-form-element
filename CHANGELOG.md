@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [10.0.1-beta.0](https://github.com/labor-digital/typo3-page-layout-form-element/compare/v9.2.5-beta.0...v10.0.1-beta.0) (2021-07-27)
+
+
+### Features
+
+* rewrite from ground up to match v10 requirements ([2305631](https://github.com/labor-digital/typo3-page-layout-form-element/commit/23056317fa5b62a6cc7a976a8c87f16791b4c295))
+
 ### [9.2.5-beta.0](https://github.com/labor-digital/typo3-page-layout-form-element/compare/v9.2.4...v9.2.5-beta.0) (2021-07-16)
 
 ### [9.2.4](https://github.com/labor-digital/typo3-page-layout-form-element/compare/v9.2.3...v9.2.4) (2020-09-29)
