@@ -1,9 +1,10 @@
 name: Create new Release
 
 on:
+    workflow_dispatch:
     push:
         branches:
-            - master
+            - v9
         paths-ignore:
             - 'composer.json'
             - 'package.json'
@@ -19,4 +20,3 @@ jobs:
                 uses: labor-digital/conventional-release-action@master
                 with:
                     github-token: ${{ secrets.github_token }}
-
