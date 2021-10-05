@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [10.1.0](https://github.com/labor-digital/typo3-page-layout-form-element/compare/v10.0.2...v10.1.0) (2021-10-05)
+
+
+### Features
+
+* introduce page parent field upgrade wizard ([082a8ac](https://github.com/labor-digital/typo3-page-layout-form-element/commit/082a8acca8e97d960326eb9d9a22b838a9b3e10e))
+
 ### [10.0.2](https://github.com/labor-digital/typo3-page-layout-form-element/compare/v10.0.1-beta.0...v10.0.2) (2021-09-03)
 
 ### [10.0.1-beta.0](https://github.com/labor-digital/typo3-page-layout-form-element/compare/v9.2.5-beta.0...v10.0.1-beta.0) (2021-07-27)
