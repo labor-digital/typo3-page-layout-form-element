@@ -77,7 +77,7 @@ MUSTACHE;
               ->registerDataHook(DataHookTypes::TYPE_LOCALIZE, FieldActionHook::class, 'translateHook');
         
         if ($field instanceof TcaField) {
-            $field->getColumn()->setType(new IntegerType())->setLength(11);
+            $field->getColumn()->setType(new IntegerType())->setDefault(0)->setLength(11);
         }
     }
     
