@@ -92,6 +92,8 @@ class Preset extends AbstractFieldPreset
             'items' => [['', 0]],
         ]);
         
+        $this->field->setDefault(0);
+        
         if (empty($this->field->getDescription())) {
             $this->field->setDescription('plfe.fieldDescription');
         }
