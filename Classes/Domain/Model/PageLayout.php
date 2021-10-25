@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *
- * Last modified: 2021.07.27 at 09:25
+ * Last modified: 2021.10.25 at 18:55
  */
 
 declare(strict_types=1);
@@ -37,40 +37,6 @@ class PageLayout extends AbstractEntity
      * @var int
      */
     protected $uid;
-
-//    /**
-//     * @var \LaborDigital\T3ba\Tool\Page\PageService
-//     */
-//    protected $pageService;
-//
-//    /**
-//     * The uid of the content page that represents the conent
-//     *
-//     * @var int|null
-//     */
-//    protected $contentUid;
-//
-//    /**
-//     * The site that is linked to the page content
-//     *
-//     * @var \TYPO3\CMS\Core\Site\Entity\SiteInterface
-//     */
-//    protected $site;
-//
-//    /**
-//     * The language for which the content was resolved
-//     *
-//     * @var \TYPO3\CMS\Core\Site\Entity\SiteLanguage
-//     */
-//    protected $language;
-//
-//    public function __construct(?int $contentUid, SiteInterface $site, SiteLanguage $language, PageService $pageService)
-//    {
-//        $this->pageService = $pageService;
-//        $this->contentUid = $contentUid;
-//        $this->site = $site;
-//        $this->language = $language;
-//    }
     
     /**
      * Returns the site that is linked to the page content
@@ -110,18 +76,21 @@ class PageLayout extends AbstractEntity
      */
     public function render(): string
     {
-        if (empty($this->contentUid)) {
+        if (empty($this->uid)) {
             return '';
         }
         
-        return $this->getTypoContext()->di()->getService(PageService::class)->renderPageContents(
-            (int)$this->contentUid,
-            [
-                'site' => $this->getSite()->getIdentifier(),
-                'language' => $this->getLanguage(),
-                'includeHiddenPages',
-            ]
-        );
+        return $this->getTypoContext()
+                    ->di()
+                    ->getService(PageService::class)
+                    ->renderPageContents(
+                        $this->uid,
+                        [
+                            'site' => $this->getSite()->getIdentifier(),
+                            'language' => $this->getLanguage(),
+                            'includeHiddenPages',
+                        ]
+                    );
     }
     
     /**
@@ -135,17 +104,20 @@ class PageLayout extends AbstractEntity
      */
     public function getElements(): array
     {
-        if (empty($this->contentUid)) {
+        if (empty($this->uid)) {
             return [];
         }
         
-        return $this->getTypoContext()->di()->getService(PageService::class)->getPageContents(
-            (int)$this->contentUid,
-            [
-                'site' => $this->getSite()->getIdentifier(),
-                'language' => $this->getLanguage(),
-                'includeHiddenPages',
-            ]
-        );
+        return $this->getTypoContext()
+                    ->di()
+                    ->getService(PageService::class)
+                    ->getPageContents(
+                        $this->uid,
+                        [
+                            'site' => $this->getSite()->getIdentifier(),
+                            'language' => $this->getLanguage(),
+                            'includeHiddenPages',
+                        ]
+                    );
     }
 }
