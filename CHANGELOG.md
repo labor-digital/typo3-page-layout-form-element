@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [10.0.1-beta.1](https://github.com/labor-digital/typo3-page-layout-form-element/compare/v10.0.1-beta.0...v10.0.1-beta.1) (2021-10-25)
+
+
+### Bug Fixes
+
+* **PageLayout:** use correct "uid" property instead of old contentId ([0e073be](https://github.com/labor-digital/typo3-page-layout-form-element/commit/0e073be675085f3f6e5232a5b63f4018bff4ce5a))
+* remove unused "Dummy" class ([295f419](https://github.com/labor-digital/typo3-page-layout-form-element/commit/295f4190e7c6b8abf4c03d13721685e24d181090))
+
 ### [10.0.1-beta.0](https://github.com/labor-digital/typo3-page-layout-form-element/compare/v9.2.5-beta.0...v10.0.1-beta.0) (2021-07-27)
 
 
