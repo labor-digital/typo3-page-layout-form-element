@@ -2,6 +2,24 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [10.2.0](https://github.com/labor-digital/typo3-page-layout-form-element/compare/v10.0.1-beta.1...v10.2.0) (2021-10-26)
+
+### [10.1.1](https://github.com/labor-digital/typo3-page-layout-form-element/compare/v10.1.0...v10.1.1) (2021-10-11)
+
+
+### Bug Fixes
+
+* **PageLayoutFormElement:** ensure the db column has "0" as default value ([9558f86](https://github.com/labor-digital/typo3-page-layout-form-element/commit/9558f86864075904e70277043c051131f7b1d9b8))
+
+## [10.1.0](https://github.com/labor-digital/typo3-page-layout-form-element/compare/v10.0.2...v10.1.0) (2021-10-05)
+
+
+### Features
+
+* introduce page parent field upgrade wizard ([082a8ac](https://github.com/labor-digital/typo3-page-layout-form-element/commit/082a8acca8e97d960326eb9d9a22b838a9b3e10e))
+
+### [10.0.2](https://github.com/labor-digital/typo3-page-layout-form-element/compare/v10.0.1-beta.0...v10.0.2) (2021-09-03)
+
 ### [10.1.1](https://github.com/labor-digital/typo3-page-layout-form-element/compare/v10.1.0...v10.1.1) (2021-10-11)
 
 
