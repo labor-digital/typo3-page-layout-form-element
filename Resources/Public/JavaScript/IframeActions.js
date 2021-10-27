@@ -22,7 +22,7 @@ define([
     'TYPO3/CMS/Backend/FormEngine',
     'TYPO3/CMS/T3plfe/ErrorHandler'
 ], function (j, modal, formEngine, showError) {
-    return function (renderId) {
+    return function (renderId, renderName) {
         var iframe = j('#' + renderId + '_iframe')[0] || null;
         
         if (document.editform) {
@@ -32,7 +32,9 @@ define([
                 
                 function childHasChanges()
                 {
-                    return iframe.contentWindow.document.editform &&
+                    return iframe &&
+                        iframe.contentWindow &&
+                        iframe.contentWindow.document.editform &&
                         iframe.contentWindow.TYPO3.FormEngine &&
                         iframe.contentWindow.TYPO3.FormEngine.hasChange();
                 }
@@ -115,6 +117,7 @@ define([
                 
                 j('#' + renderId + '_empty').css({display: 'block'});
                 j('#' + renderId + '_container').html('').css({display: 'none'});
+                j('input[name="' + renderName + '"]').val(0);
                 j.get($deleteButton.data('actionUrl'))
                  .fail(function (err) {
                      var error = j(e.target).data('error-label') || 'Error:';

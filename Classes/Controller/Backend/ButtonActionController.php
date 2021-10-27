@@ -61,6 +61,7 @@ class ButtonActionController
         return new JsonResponse([
             'data' => [
                 'iframe' => $iframe,
+                'pid' => $contentPid,
             ],
         ]);
     }

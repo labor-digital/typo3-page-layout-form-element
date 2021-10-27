@@ -220,7 +220,7 @@ class PageLayoutService implements PublicServiceInterface
         $fullscreenLink = $this->buildEditLink($contentPid, $language);
         $deleteLink = $this->buildAjaxDeleteLink($renderName, $contentPid);
         
-        return $this->renderingService->renderActionButtons($fullscreenLink, $deleteLink, $renderId, false);
+        return $this->renderingService->renderActionButtons($fullscreenLink, $deleteLink, $renderId, $renderName, false);
         
     }
     
@@ -246,7 +246,7 @@ class PageLayoutService implements PublicServiceInterface
         $fullscreenLink = $this->buildEditLink($contentPid, $language);
         $deleteLink = $this->buildAjaxDeleteLink($renderName, $contentPid);
         
-        return $this->renderingService->renderIframe($iframeLink, $fullscreenLink, $deleteLink, $renderId);
+        return $this->renderingService->renderIframe($iframeLink, $fullscreenLink, $deleteLink, $renderId, $renderName);
     }
     
     /**

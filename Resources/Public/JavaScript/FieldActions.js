@@ -20,8 +20,7 @@ define([
     'jquery',
     'TYPO3/CMS/T3plfe/ErrorHandler'
 ], function (j, showError) {
-    return function (renderId) {
-        
+    return function (renderId, renderName) {
         var $emptyGui = j('#' + renderId + '_empty');
         var $createButton = $emptyGui.find('*[data-action-button=create]');
         $createButton.click(function (e) {
@@ -30,9 +29,17 @@ define([
             
             j.get($createButton.data('actionUrl'))
              .done(function (content) {
-                 if (content.data && content.data.iframe) {
+                 if (!content.data) {
+                     return;
+                 }
+                
+                 if (content.data.iframe) {
                      j('#' + renderId + '_container').html(content.data.iframe).css({display: 'block'});
                      $emptyGui.css({display: 'none'});
+                 }
+                
+                 if (content.data.pid) {
+                     j('input[name="' + renderName + '"]').val(content.data.pid);
                  }
              })
              .fail(function (err) {

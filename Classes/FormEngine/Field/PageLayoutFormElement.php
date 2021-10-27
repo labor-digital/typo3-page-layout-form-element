@@ -88,7 +88,7 @@ MUSTACHE;
     {
         $this->context->registerRequireJsModule(
             'TYPO3/CMS/T3plfe/FieldActions',
-            'module("' . $this->context->getRenderId() . '");'
+            'module("' . $this->context->getRenderId() . '","' . $this->context->getRenderName() . '");'
         );
         
         $uid = $this->context->getRecordUid();

@@ -93,12 +93,19 @@ class RenderingService implements PublicServiceInterface
      * @param   string  $iframeLink      The link to show in the iframe
      * @param   string  $fullscreenLink  The link to navigate to, when "fullscreen" is clicked
      * @param   string  $deleteLink      The ajax link to handle the deletion of content pages
-     * @param   string  $renderId        The unique id for the iframe {@see makeIframeId)
+     * @param   string  $renderId        The form engine id for the hidden field
+     * @param   string  $renderName      The form engine name for the hidden field
      *
      * @return string
      * @see \LaborDigital\T3plfe\Service\PageLayoutService to generate the links
      */
-    public function renderIframe(string $iframeLink, string $fullscreenLink, string $deleteLink, string $renderId): string
+    public function renderIframe(
+        string $iframeLink,
+        string $fullscreenLink,
+        string $deleteLink,
+        string $renderId,
+        string $renderName
+    ): string
     {
         $iframeId = $this->makeIframeId($renderId);
         
@@ -115,7 +122,7 @@ class RenderingService implements PublicServiceInterface
 }
 </style>';
         
-        return $style . $this->renderActionButtons($fullscreenLink, $deleteLink, $renderId) .
+        return $style . $this->renderActionButtons($fullscreenLink, $deleteLink, $renderId, $renderName) .
                '<iframe name="' . $iframeId . '" id="' . $iframeId . '" src="' . $iframeLink . '"></iframe>';
     }
     
@@ -129,7 +136,13 @@ class RenderingService implements PublicServiceInterface
      *
      * @return string
      */
-    public function renderActionButtons(string $fullscreenLink, string $deleteLink, string $renderId, bool $expandButton = true): string
+    public function renderActionButtons(
+        string $fullscreenLink,
+        string $deleteLink,
+        string $renderId,
+        string $renderName,
+        bool $expandButton = true
+    ): string
     {
         $buttons = [];
         
@@ -172,7 +185,7 @@ class RenderingService implements PublicServiceInterface
         return
             '<script type="text/javascript">
 require(["TYPO3/CMS/T3plfe/IframeActions"], function(module){
-module("' . $renderId . '");
+module("' . $renderId . '","' . $renderName . '");
 });
 </script>' .
             '<div class="btn-group btn-group-sm mb" role="group" id="' . $renderId . '_buttons">' .
