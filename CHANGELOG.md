@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [10.3.0](https://github.com/labor-digital/typo3-page-layout-form-element/compare/v10.2.0...v10.3.0) (2021-10-27)
+
+
+### Features
+
+* **IframeActions:** ensure that child forms are saved when parent is saved/closed ([ba3f01d](https://github.com/labor-digital/typo3-page-layout-form-element/commit/ba3f01d0b579a4adde04612bab6f4aab63a7306f))
+
+
+### Bug Fixes
+
+* ensure the hidden form field gets updated when a child page is added/deleted ([6f7076c](https://github.com/labor-digital/typo3-page-layout-form-element/commit/6f7076ca557315accb29d0c22d5a25f16275cc2e))
+* **FieldPreset:** set default value of field to "0" ([1082f86](https://github.com/labor-digital/typo3-page-layout-form-element/commit/1082f86757c9fef14218b6bbbfc1a399c83eb1cd))
+* **IframeActions:** remove console spam ([0b9b842](https://github.com/labor-digital/typo3-page-layout-form-element/commit/0b9b84289fb33c03c538a0533612a47e21d6722d))
+
 ## [10.2.0](https://github.com/labor-digital/typo3-page-layout-form-element/compare/v10.0.1-beta.1...v10.2.0) (2021-10-26)
 
 ### [10.1.1](https://github.com/labor-digital/typo3-page-layout-form-element/compare/v10.1.0...v10.1.1) (2021-10-11)
