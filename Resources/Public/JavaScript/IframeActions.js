@@ -23,9 +23,49 @@ define([
     'TYPO3/CMS/T3plfe/ErrorHandler'
 ], function (j, modal, formEngine, showError) {
     return function (renderId) {
-        console.log(renderId);
-        var $buttons = j('#' + renderId + '_buttons');
+        var iframe = j('#' + renderId + '_iframe')[0] || null;
         
+        if (document.editform) {
+            var submittable = true;
+            if (iframe) {
+                var $eForm = j(document.editform);
+                
+                function childHasChanges()
+                {
+                    return iframe.contentWindow.document.editform &&
+                        iframe.contentWindow.TYPO3.FormEngine &&
+                        iframe.contentWindow.TYPO3.FormEngine.hasChange();
+                }
+                
+                // Prevent closing the form if child record has changes
+                const hasChangeOrg = formEngine.hasChange;
+                formEngine.hasChange = function () {
+                    return hasChangeOrg() || childHasChanges();
+                };
+                
+                // Save the child form if the parent record is saved
+                $eForm.submit(function (e) {
+                    if (childHasChanges()) {
+                        submittable = false;
+                        
+                        iframe.contentWindow.onunload = function () {
+                            clearTimeout(window.t3plfCloseTimeout);
+                            window.t3plfCloseTimeout = setTimeout(function () {
+                                submittable = true;
+                                $eForm.submit();
+                            }, 500);
+                        };
+                        iframe.contentWindow.TYPO3.FormEngine.saveDocument();
+                    }
+                    
+                    if (!submittable) {
+                        e.preventDefault();
+                    }
+                });
+            }
+        }
+        
+        var $buttons = j('#' + renderId + '_buttons');
         var $fullscreenButton = $buttons.find('*[data-action-button=fullscreen]');
         $fullscreenButton.click(function (e) {
             e.preventDefault();
