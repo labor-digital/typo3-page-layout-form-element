@@ -121,8 +121,6 @@ define([
                      error += ' | ' + err.statusText + ' (' + err.status + ')';
                      showError(error, err);
                  });
-                
-                console.log('DELETE!');
             });
         });
     };
