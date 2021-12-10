@@ -172,7 +172,7 @@ class PageLayoutRepository extends BetterRepository
             'includeHiddenPages',
             'includeHiddenContent',
             'returnRaw',
-            'force' => $this->getUseForce($options),
+            'force' => $this->getUseForce($options) !== false,
         ]);
         
         foreach ($contents as $row) {
@@ -232,10 +232,10 @@ class PageLayoutRepository extends BetterRepository
      *
      * @param   array  $options
      *
-     * @return bool
+     * @return bool|string
      */
-    protected function getUseForce(array $options): bool
+    protected function getUseForce(array $options)
     {
-        return ! (bool)($options['respectUserPermissions'] ?? false);
+        return ($options['respectUserPermissions'] ?? null) ? false : 'soft';
     }
 }

@@ -129,7 +129,7 @@ class PageLayoutService implements PublicServiceInterface
                 $renderName = FieldNamingUtil::updateUidInRenderName($renderName, $row['uid']);
                 $data = FieldNamingUtil::parseRenderName($renderName, $contentPid);
                 if (! empty($data)) {
-                    $this->dataHandlerService->processData($data, [], ! ($options['respectUserPermissions'] ?? false));
+                    $this->dataHandlerService->processData($data, [], $this->getUseForce($options));
                 }
                 
                 // Create a translation of the page if required
@@ -138,7 +138,7 @@ class PageLayoutService implements PublicServiceInterface
                     $transContentPid = $this->pageRepository->translatePage($contentPid, (int)$row[$languageField]);
                     $data = FieldNamingUtil::parseRenderName($renderName, $transContentPid);
                     if (! empty($data)) {
-                        $this->dataHandlerService->processData($data, [], ! ($options['respectUserPermissions'] ?? false));
+                        $this->dataHandlerService->processData($data, [], $this->getUseForce($options));
                     }
                 }
             }
@@ -173,7 +173,7 @@ class PageLayoutService implements PublicServiceInterface
             $renderName = FieldNamingUtil::updateUidInRenderName($renderName, $row['uid']);
             $data = FieldNamingUtil::parseRenderName($renderName, 0);
             if (! empty($data)) {
-                $this->dataHandlerService->processData($data, [], ! ($options['respectUserPermissions'] ?? false));
+                $this->dataHandlerService->processData($data, [], $this->getUseForce($options));
             }
         });
     }
@@ -315,5 +315,17 @@ class PageLayoutService implements PublicServiceInterface
                 'pid' => $contentPid,
             ],
         ]);
+    }
+    
+    /**
+     * Returns 'soft' if the force option should be used, false if not
+     *
+     * @param   array  $options
+     *
+     * @return bool|string
+     */
+    protected function getUseForce(array $options)
+    {
+        return ($options['respectUserPermissions'] ?? null) ? false : 'soft';
     }
 }
