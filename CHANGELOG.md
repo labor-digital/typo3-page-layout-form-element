@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [10.4.0](https://github.com/labor-digital/typo3-page-layout-form-element/compare/v10.3.0...v10.4.0) (2021-12-10)
+
+
+### Features
+
+* **PageLayoutRepository:** inherit storage page permissions for content pages ([70691e4](https://github.com/labor-digital/typo3-page-layout-form-element/commit/70691e4475b3804ba3a563c745089fce5ed7bcae))
+* **PageService:** use "soft" forcing wherever possible ([c38d204](https://github.com/labor-digital/typo3-page-layout-form-element/commit/c38d204c45d1a8e9c24c4d2538dd0e8acdde7b38))
+
 ## [10.3.0](https://github.com/labor-digital/typo3-page-layout-form-element/compare/v10.2.0...v10.3.0) (2021-10-27)
 
 
