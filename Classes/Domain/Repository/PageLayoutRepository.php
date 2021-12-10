@@ -108,8 +108,19 @@ class PageLayoutRepository extends BetterRepository
         $tableName = FieldNamingUtil::getTableNameFromRenderName($renderName);
         $recordUid = FieldNamingUtil::getUidFromRenderName($renderName);
         
+        $storageData = $this->pageService->getPageInfo($storagePid, true);
+        if (! is_array($storageData)) {
+            throw new \InvalidArgumentException('There is no page that has the uid you provided: ' . $storagePid);
+        }
+        
+        $inheritedData = [];
+        foreach (['perms_userid', 'perms_groupid', 'perms_user', 'perms_group', 'perms_everybody'] as $field) {
+            $inheritedData[$field] = $storageData[$field] ?? 0;
+        }
+        
         $newPageRow = array_merge(
             $options['addToPageRow'] ?? [],
+            $inheritedData,
             [
                 PagesTable::PAGE_LAYOUT_FIELD => $tableName . '_' . $recordUid,
                 'doktype' => PagesTable::PAGE_LAYOUT_DOK_TYPE,
