@@ -20,10 +20,18 @@ define([
     'jquery',
     'TYPO3/CMS/Backend/Modal',
     'TYPO3/CMS/Backend/FormEngine',
-    'TYPO3/CMS/T3plfe/ErrorHandler'
-], function (j, modal, formEngine, showError) {
+    'TYPO3/CMS/T3plfe/ErrorHandler',
+    'TYPO3/CMS/Backend/Utility/MessageUtility'
+], function (j, modal, formEngine, showError, messageUtility) {
     return function (renderId, renderName) {
         var iframe = j('#' + renderId + '_iframe')[0] || null;
+        
+        // We need to proxy all global messages into our iframe in order for inline file references to work correctly
+        if (iframe.contentWindow) {
+            window.addEventListener('message', function (m) {
+                messageUtility.MessageUtility.send(m.data, iframe.contentWindow);
+            });
+        }
         
         if (document.editform) {
             var submittable = true;
