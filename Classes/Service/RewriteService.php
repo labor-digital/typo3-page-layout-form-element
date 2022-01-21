@@ -87,8 +87,12 @@ class RewriteService implements PublicServiceInterface
                 urlencode($this->typoContext->request()->getGet('backUrl', '')) .
                 '&' . PageLayoutFilterMiddleware::PAGE_LAYOUT_IFRAME_MARKER . '=' . ($forIframeRequest ? '1' : '') .
                 '"',
-        
         ];
+        
+        if (! $this->typoContext->beUser()->isAdmin() &&
+            $this->typoContext->config()->getTsConfigValue('t3plfe.allowPageEditForNonAdmins', '0') !== '1') {
+            $replacements['/<a[^>]*?>.*?actions-page-open.*?<\/a>/si'] = '';
+        }
         
         if (! $forIframeRequest) {
             // Inject the "back" button

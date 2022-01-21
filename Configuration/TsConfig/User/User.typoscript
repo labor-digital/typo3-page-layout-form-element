@@ -1,1 +1,7 @@
 options.pageTree.excludeDoktypes := addToList(8348)
+
+[page["doktype"] == 8348]
+	options.saveDocView = 0
+	options.contextMenu.table.tt_content.disableItems = new,edit,view,info
+	options.contextMenu.table.pages.disableItems = new,edit,view,info,copy,CopyRelease,cut,cutRelease,pasteAfter,pagesSort,openListModule,mountAsTreeRoot,hideInMenus,showInMenus,permissions,enable,disable,delete,clearCache
+[end]
