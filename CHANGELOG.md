@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [10.4.2](https://github.com/labor-digital/typo3-page-layout-form-element/compare/v10.4.1...v10.4.2) (2022-01-21)
+
+
+### Bug Fixes
+
+* remove multiple access points to the content page to avoid "editor havoc" ([74107e9](https://github.com/labor-digital/typo3-page-layout-form-element/commit/74107e9787783ac4043e1b09a20286204137c164))
+
 ### [10.4.1](https://github.com/labor-digital/typo3-page-layout-form-element/compare/v10.4.0...v10.4.1) (2022-01-21)
 
 
