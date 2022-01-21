@@ -1,55 +1,38 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><!--
-  ~ Copyright 2021 LABOR.digital
-  ~
-  ~ Licensed under the Apache License, Version 2.0 (the "License");
-  ~ you may not use this file except in compliance with the License.
-  ~ You may obtain a copy of the License at
-  ~
-  ~     http://www.apache.org/licenses/LICENSE-2.0
-  ~
-  ~ Unless required by applicable law or agreed to in writing, software
-  ~ distributed under the License is distributed on an "AS IS" BASIS,
-  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-  ~ See the License for the specific language governing permissions and
-  ~ limitations under the License.
-  ~
-  ~ Last modified: 2021.07.27 at 14:18
-  -->
-
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <xliff version="1.0">
-	<file source-language="en" datatype="plaintext" original="messages" date="2019-07-14T22:00:47Z" product-name="typo3_page_layout_form_element">
-		<header/>
-		<body>
-			<trans-unit id="backButtonLabel">
-				<source>Back to parent record</source>
-			</trans-unit>
-			<trans-unit id="noElementSaveFirstMessage">
-				<source>To edit the content elements of this field, save the record first. After you saved, you can edit your content elements right here.</source>
-			</trans-unit>
-			<trans-unit id="fieldDescription">
-				<source>This field allows you to add content elements to this record, and modify them like on a normal page</source>
-			</trans-unit>
-			<trans-unit id="action.enablePage">
-				<source>Enable elements</source>
-			</trans-unit>
-			<trans-unit id="action.fullscreen">
-				<source>Edit in fullscreen</source>
-			</trans-unit>
-			<trans-unit id="action.toggleSize">
-				<source>Toggle editor size</source>
-			</trans-unit>
-			<trans-unit id="action.delete">
-				<source>Delete all elements</source>
-			</trans-unit>
-			<trans-unit id="doktype">
-				<source>Page Layout Form-Element Container</source>
-			</trans-unit>
-			<trans-unit id="error.pageCreationFailed">
-				<source>The creation of the element page failed. Please try again.</source>
-			</trans-unit>
-			<trans-unit id="error.pageDeletionFailed">
-				<source>The deletion of the element page failed. Please try again.</source>
-			</trans-unit>
-		</body>
-	</file>
+    <file source-language="en" datatype="plaintext" original="messages" date="2022-01-21T16:23:15Z" product-name="typo3_page_layout_form_element">
+        <header/>
+        <body>
+            <trans-unit id="backButtonLabel">
+                <source>Back to parent record</source>
+            </trans-unit>
+            <trans-unit id="doktype">
+                <source>Page Layout Form-Element Container</source>
+            </trans-unit>
+            <trans-unit id="fieldDescription">
+                <source>This field allows you to add content elements to this record, and modify them like on a normal page</source>
+            </trans-unit>
+            <trans-unit id="noElementSaveFirstMessage">
+                <source>To edit the content elements of this field, save the record first. After you saved, you can edit your content elements right here.</source>
+            </trans-unit>
+            <trans-unit id="action.delete">
+                <source>Delete all elements</source>
+            </trans-unit>
+            <trans-unit id="action.enablePage">
+                <source>Enable elements</source>
+            </trans-unit>
+            <trans-unit id="action.fullscreen">
+                <source>Edit in fullscreen</source>
+            </trans-unit>
+            <trans-unit id="action.toggleSize">
+                <source>Toggle editor size</source>
+            </trans-unit>
+            <trans-unit id="error.pageCreationFailed">
+                <source>The creation of the element page failed. Please try again.</source>
+            </trans-unit>
+            <trans-unit id="error.pageDeletionFailed">
+                <source>The deletion of the element page failed. Please try again.</source>
+            </trans-unit>
+        </body>
+    </file>
 </xliff>
