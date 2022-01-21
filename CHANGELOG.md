@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [10.4.1](https://github.com/labor-digital/typo3-page-layout-form-element/compare/v10.4.0...v10.4.1) (2022-01-21)
+
+
+### Bug Fixes
+
+* **JavaScript:** fix inline file relations in iframe editing mode ([46f8786](https://github.com/labor-digital/typo3-page-layout-form-element/commit/46f8786fc3921979c521ecafa7aa412b9543129b))
+* **Translation:** update german translation labels ([8747a48](https://github.com/labor-digital/typo3-page-layout-form-element/commit/8747a48e8eab15af8af5cc8539b0cdd362cc026c))
+
 ## [10.4.0](https://github.com/labor-digital/typo3-page-layout-form-element/compare/v10.3.0...v10.4.0) (2021-12-10)
 
 
