@@ -24,7 +24,7 @@ namespace LaborDigital\T3plfe\EventHandler;
 
 
 use LaborDigital\T3ba\Core\CodeGeneration\ClassOverrideGenerator;
-use LaborDigital\T3ba\Event\Core\PackageManagerCreatedEvent;
+use LaborDigital\T3ba\Event\Core\BasicBootDoneEvent;
 use LaborDigital\T3plfe\Override\ExtendedAbstractTreeView;
 use Neunerlei\EventBus\Subscription\EventSubscriptionInterface;
 use Neunerlei\EventBus\Subscription\LazyEventSubscriberInterface;
@@ -37,10 +37,10 @@ class Override implements LazyEventSubscriberInterface
      */
     public static function subscribeToEvents(EventSubscriptionInterface $subscription): void
     {
-        $subscription->subscribe(PackageManagerCreatedEvent::class, 'onPackageManagerCreated');
+        $subscription->subscribe(BasicBootDoneEvent::class, 'onBootDone');
     }
     
-    public function onPackageManagerCreated(): void
+    public function onBootDone(): void
     {
         // We need to override some core classes to hide the content pages in the display options
         ClassOverrideGenerator::registerOverride(AbstractTreeView::class, ExtendedAbstractTreeView::class);
