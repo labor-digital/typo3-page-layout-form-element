@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [10.4.4](https://github.com/labor-digital/typo3-page-layout-form-element/compare/v10.4.3...v10.4.4) (2022-01-31)
+
+
+### Bug Fixes
+
+* **Override:** avoid issues when generating the AbstractTreeView override ([b7d29ef](https://github.com/labor-digital/typo3-page-layout-form-element/commit/b7d29ef61617a762e4b55963c9ff1e1279227370))
+
 ### [10.4.3](https://github.com/labor-digital/typo3-page-layout-form-element/compare/v10.4.2...v10.4.3) (2022-01-31)
 
 
