@@ -43,6 +43,8 @@ class Override implements LazyEventSubscriberInterface
     public function onBootDone(): void
     {
         // We need to override some core classes to hide the content pages in the display options
-        ClassOverrideGenerator::registerOverride(AbstractTreeView::class, ExtendedAbstractTreeView::class);
+        if (ClassOverrideGenerator::canOverrideClass(AbstractTreeView::class)) {
+            ClassOverrideGenerator::registerOverride(AbstractTreeView::class, ExtendedAbstractTreeView::class);
+        }
     }
 }
