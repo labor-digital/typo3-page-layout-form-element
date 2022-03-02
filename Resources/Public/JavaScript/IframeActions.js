@@ -26,6 +26,23 @@ define([
     return function (renderId, renderName) {
         var iframe = j('#' + renderId + '_iframe')[0] || null;
         
+        // Wrap the setSelectOptionFromExternalSource method to allow the element browser to work correctly
+        var orgSelectFromExternalSource = formEngine.setSelectOptionFromExternalSource;
+        formEngine.setSelectOptionFromExternalSource = function (fieldName, value, label, title, exclusiveValues, $optionEl) {
+            try {
+                return orgSelectFromExternalSource(fieldName, value, label, title, exclusiveValues, $optionEl);
+            } catch (e) {
+                if (iframe.contentWindow &&
+                    iframe.contentWindow.document.editform &&
+                    iframe.contentWindow.TYPO3 &&
+                    iframe.contentWindow.TYPO3.FormEngine &&
+                    iframe.contentWindow.TYPO3.FormEngine.setSelectOptionFromExternalSource) {
+                    return iframe.contentWindow.TYPO3.FormEngine.setSelectOptionFromExternalSource(
+                        fieldName, value, label, title, exclusiveValues, $optionEl);
+                }
+            }
+        };
+        
         // We need to proxy all global messages into our iframe in order for inline file references to work correctly
         if (iframe.contentWindow) {
             window.addEventListener('message', function (m) {
