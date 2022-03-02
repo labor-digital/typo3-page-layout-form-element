@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [10.4.5](https://github.com/labor-digital/typo3-page-layout-form-element/compare/v10.4.4...v10.4.5) (2022-03-02)
+
+
+### Bug Fixes
+
+* **IframeActions:** add compatibility layer to handle element browser actions in the iframe mode ([cfaf9c7](https://github.com/labor-digital/typo3-page-layout-form-element/commit/cfaf9c7aaae73b1fe16b92483166098838fca3a7))
+
 ### [10.4.4](https://github.com/labor-digital/typo3-page-layout-form-element/compare/v10.4.3...v10.4.4) (2022-01-31)
 
 
