@@ -39,7 +39,10 @@ declare(strict_types=1);
 namespace LaborDigital\T3plfe\Search;
 
 
-use LaborDigital\T3ba\Core\Exception\NotImplementedException;
+use LaborDigital\T3plfe\Domain\Model\PageLayout;
+use LaborDigital\T3sai\Core\Indexer\Queue\QueueRequest;
+use LaborDigital\T3sai\Search\Indexer\Page\ContentElement\PageContentProcessor;
+use LaborDigital\T3sai\Search\Indexer\Page\PageContent\PageContentResolver;
 
 /**
  * Trait PageLayoutFormElementSearchTransformerTrait
@@ -49,50 +52,55 @@ use LaborDigital\T3ba\Core\Exception\NotImplementedException;
  *
  * @package LaborDigital\Typo3PageLayoutFormElement\Search
  */
-trait PageLayoutFormElementRecordTransformerTrait
+trait PageLayoutFormElementRecordIndexerTrait
 {
-
-//    /**
-//     * The instance of the page content generator to convert the content element's into a single string
-//     *
-//     * @var PageContentGenerator
-//     */
-//    protected $pageContentGenerator;
-//
-//    /**
-//     * Inject the instance of the page content generator
-//     *
-//     * @param   \LaborDigital\T3SAI\Builtin\Transformer\Page\PageContentGenerator  $pageContentGenerator
-//     */
-//    public function injectPageContentGenerator(PageContentGenerator $pageContentGenerator): void
-//    {
-//        $this->pageContentGenerator = $pageContentGenerator;
-//    }
+    
+    /**
+     * @var \LaborDigital\T3sai\Search\Indexer\Page\PageContent\PageContentResolver
+     */
+    protected $contentResolver;
+    
+    /**
+     * @var \LaborDigital\T3sai\Search\Indexer\Page\ContentElement\PageContentProcessor
+     */
+    protected $pageContentProcessor;
+    
+    public function injectPageContentResolver(PageContentResolver $contentResolver): void
+    {
+        $this->contentResolver = $contentResolver;
+    }
+    
+    public function injectPageContentProcessor(PageContentProcessor $PageContentProcessor): void
+    {
+        $this->pageContentProcessor = $PageContentProcessor;
+    }
     
     /**
      * This method can be used to find the search indexer content of a page layout field.
      * It receives the field name / the PageLayoutContent content object and will return the whole content as a string.
      * While converting the layout to a string, the method will respect the registered content element transformers.
      *
-     * @param   int|string|\LaborDigital\T3plfe\Domain\Model\PageLayout  $field    The value of the pageLayout field, or the instance of a
-     *                                                                             PageLayoutContent element
-     * @param   IndexerContext                                           $context  The indexer context to read the language from
+     * @param   int|string|PageLayout  $layout   The value of the pageLayout field, or the instance of a PageLayoutContent element
+     * @param   QueueRequest           $request  The indexer context to read the language from
      *
-     * @return string
+     * @return array
      */
-    public function getPageLayoutContent($field, object $context): string
+    public function getPageLayoutContent($layout, QueueRequest $request): array
     {
-        throw new NotImplementedException('This feature is not yet implemented');
-//        // Make sure we have the content element to work with
-//        if (! $field instanceof PageLayoutContent) {
-//            $field = TypoContainer::getInstance()->get(PageLayoutContent::class, [
-//                "args" => [
-//                    $context->getLanguage()->getLanguageId(),
-//                    $field,
-//                ],
-//            ]);
-//        }
-//
-//        return $this->pageContentGenerator->getContent($field->getPageUid(), time(), $context);
+        if ($layout instanceof PageLayout) {
+            /** @noinspection CallableParameterUseCaseInTypeContextInspection */
+            $layout = $layout->getPid() ?? $layout->getUid();
+        }
+        
+        if (empty($layout)) {
+            return [];
+        }
+        
+        $layout = (int)$layout;
+        
+        return $this->pageContentProcessor->generateContent(
+            $this->contentResolver->makeContentIterator($layout),
+            $request
+        );
     }
 }
