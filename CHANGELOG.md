@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [10.5.0](https://github.com/labor-digital/typo3-page-layout-form-element/compare/v10.4.5...v10.5.0) (2022-04-25)
+
+
+### Features
+
+* reenable T3sai indexer trait for v10 ([a3c0b97](https://github.com/labor-digital/typo3-page-layout-form-element/commit/a3c0b973acfebaa8e0976d8a924a2c3cdffd2046))
+
 ### [10.4.5](https://github.com/labor-digital/typo3-page-layout-form-element/compare/v10.4.4...v10.4.5) (2022-03-02)
 
 
