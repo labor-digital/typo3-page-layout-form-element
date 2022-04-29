@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [10.6.0](https://github.com/labor-digital/typo3-page-layout-form-element/compare/v10.5.0...v10.6.0) (2022-04-29)
+
+
+### Features
+
+* **Search:** adjust record indexer to match new t3sai requirements ([bf21175](https://github.com/labor-digital/typo3-page-layout-form-element/commit/bf21175585b4625c3920a3c9b6c682c7625da3a1))
+
 ## [10.5.0](https://github.com/labor-digital/typo3-page-layout-form-element/compare/v10.4.5...v10.5.0) (2022-04-25)
 
 
