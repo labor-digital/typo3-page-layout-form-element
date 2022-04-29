@@ -40,8 +40,9 @@ namespace LaborDigital\T3plfe\Search;
 
 
 use LaborDigital\T3plfe\Domain\Model\PageLayout;
+use LaborDigital\T3sai\Core\Indexer\Node\Node;
 use LaborDigital\T3sai\Core\Indexer\Queue\QueueRequest;
-use LaborDigital\T3sai\Search\Indexer\Page\ContentElement\PageContentProcessor;
+use LaborDigital\T3sai\Search\Indexer\Page\PageContent\PageContentIndexer;
 use LaborDigital\T3sai\Search\Indexer\Page\PageContent\PageContentResolver;
 
 /**
@@ -61,31 +62,32 @@ trait PageLayoutFormElementRecordIndexerTrait
     protected $contentResolver;
     
     /**
-     * @var \LaborDigital\T3sai\Search\Indexer\Page\ContentElement\PageContentProcessor
+     * @var \LaborDigital\T3sai\Search\Indexer\Page\PageContent\PageContentIndexer
      */
-    protected $pageContentProcessor;
+    protected $contentIndexer;
     
     public function injectPageContentResolver(PageContentResolver $contentResolver): void
     {
         $this->contentResolver = $contentResolver;
     }
     
-    public function injectPageContentProcessor(PageContentProcessor $PageContentProcessor): void
+    public function injectPageContentProcessor(PageContentIndexer $contentIndexer): void
     {
-        $this->pageContentProcessor = $PageContentProcessor;
+        $this->contentIndexer = $contentIndexer;
     }
     
     /**
      * This method can be used to find the search indexer content of a page layout field.
-     * It receives the field name / the PageLayoutContent content object and will return the whole content as a string.
-     * While converting the layout to a string, the method will respect the registered content element transformers.
+     * It receives the field name / the PageLayoutContent content object and automatically append it to the provided node
+     * While resolving the content, the method will respect the registered content element transformers.
      *
      * @param   int|string|PageLayout  $layout   The value of the pageLayout field, or the instance of a PageLayoutContent element
-     * @param   QueueRequest           $request  The indexer context to read the language from
+     * @param   Node                   $node     The node to apply the contents to
+     * @param   QueueRequest|null      $request  Optional request object to replace that of the node
      *
-     * @return array
+     * @return void
      */
-    public function getPageLayoutContent($layout, QueueRequest $request): array
+    public function addPageLayoutContentToNode($layout, Node $node, ?QueueRequest $request = null): void
     {
         if ($layout instanceof PageLayout) {
             /** @noinspection CallableParameterUseCaseInTypeContextInspection */
@@ -93,14 +95,13 @@ trait PageLayoutFormElementRecordIndexerTrait
         }
         
         if (empty($layout)) {
-            return [];
+            return;
         }
         
-        $layout = (int)$layout;
-        
-        return $this->pageContentProcessor->generateContent(
-            $this->contentResolver->makeContentIterator($layout),
-            $request
+        $this->contentIndexer->index(
+            $this->contentResolver->makeContentIterator((int)$layout),
+            $node,
+            $request ?? $node->getRequest()
         );
     }
 }
