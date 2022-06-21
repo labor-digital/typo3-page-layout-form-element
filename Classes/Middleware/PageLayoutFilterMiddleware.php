@@ -57,19 +57,27 @@ class PageLayoutFilterMiddleware implements MiddlewareInterface
             // Special handling for new content element wizard
             // If the return url is set, we check if it is executed in an iframe
             $route = $request->getQueryParams()['route'] ?? null;
-            if ($route === '/record/content/wizard/new' && isset($request->getQueryParams()['returnUrl'])) {
+            if (isset($request->getQueryParams()['returnUrl'])) {
                 $uri = Path::makeUri($request->getQueryParams()['returnUrl']);
                 parse_str($uri->getQuery(), $query);
-                if (empty($query[static::PAGE_LAYOUT_IFRAME_MARKER])) {
-                    return $response;
+                if ($route === '/record/content/wizard/new') {
+                    if (empty($query[static::PAGE_LAYOUT_IFRAME_MARKER])) {
+                        return $response;
+                    }
+                    
+                    return $this->eventDispatcher
+                        ->dispatch(new NewCeWizardInIframeFilterEvent($response, $request->withQueryParams($query)))
+                        ->getResponse();
                 }
                 
-                return $this->eventDispatcher
-                    ->dispatch(new NewCeWizardInIframeFilterEvent($response, $request->withQueryParams($query)))
-                    ->getResponse();
+                if (isset($query[static::PAGE_LAYOUT_REQUEST_MARKER])) {
+                    $request = $request->withQueryParams($query);
+                } else {
+                    return $response;
+                }
+            } else {
+                return $response;
             }
-            
-            return $response;
         }
         
         return $this->eventDispatcher
