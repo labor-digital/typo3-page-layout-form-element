@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [10.6.1](https://github.com/labor-digital/typo3-page-layout-form-element/compare/v10.6.0...v10.6.1) (2022-06-21)
+
+
+### Bug Fixes
+
+* **Rewrite:** apply rewrite for content element GUI correctly ([1b8293b](https://github.com/labor-digital/typo3-page-layout-form-element/commit/1b8293b946d8d701cc8ea09b51cdc40faa586e9a))
+
 ## [10.6.0](https://github.com/labor-digital/typo3-page-layout-form-element/compare/v10.5.0...v10.6.0) (2022-04-29)
 
 
