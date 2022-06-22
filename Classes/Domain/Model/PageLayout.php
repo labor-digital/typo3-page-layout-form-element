@@ -22,6 +22,7 @@ declare(strict_types=1);
 namespace LaborDigital\T3plfe\Domain\Model;
 
 
+use LaborDigital\T3ba\Tool\Cache\CacheTagProviderInterface;
 use LaborDigital\T3ba\Tool\Page\PageService;
 use LaborDigital\T3ba\Tool\TypoContext\TypoContextAwareTrait;
 use Throwable;
@@ -29,7 +30,7 @@ use TYPO3\CMS\Core\Site\Entity\SiteInterface;
 use TYPO3\CMS\Core\Site\Entity\SiteLanguage;
 use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
 
-class PageLayout extends AbstractEntity
+class PageLayout extends AbstractEntity implements CacheTagProviderInterface
 {
     use TypoContextAwareTrait;
     
@@ -120,4 +121,14 @@ class PageLayout extends AbstractEntity
                         ]
                     );
     }
+    
+    /**
+     * @inheritDoc
+     */
+    public function getCacheTags(): array
+    {
+        return ['pageId_' . $this->getUid()];
+    }
+    
+    
 }

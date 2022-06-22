@@ -38,11 +38,15 @@ declare(strict_types=1);
 
 namespace LaborDigital\T3plfe\ViewHelpers;
 
+use LaborDigital\T3ba\Tool\Cache\Page\PageCacheTaggerAwareInterface;
+use LaborDigital\T3ba\Tool\Cache\Page\PageCacheTaggerAwareTrait;
 use LaborDigital\T3plfe\Domain\Model\PageLayout;
 use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper;
 
-class ContentPageViewHelper extends AbstractViewHelper
+class ContentPageViewHelper extends AbstractViewHelper implements PageCacheTaggerAwareInterface
 {
+    use PageCacheTaggerAwareTrait;
+    
     protected $escapeOutput = false;
     protected $escapeChildren = false;
     
@@ -65,6 +69,8 @@ class ContentPageViewHelper extends AbstractViewHelper
         $value = $this->arguments['value'] ?? $this->renderChildren();
         
         if ($value instanceof PageLayout) {
+            $this->getPageCacheTagger()->addTag($value);
+            
             return $value->render();
         }
         
