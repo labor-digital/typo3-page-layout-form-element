@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [10.6.2](https://github.com/labor-digital/typo3-page-layout-form-element/compare/v10.6.1...v10.6.2) (2022-06-22)
+
+
+### Bug Fixes
+
+* add cache tags when rendering the page content ([6b21eac](https://github.com/labor-digital/typo3-page-layout-form-element/commit/6b21eacfcce129c0ee2ce8688d1ebf45dcb15cc4))
+
 ### [10.6.1](https://github.com/labor-digital/typo3-page-layout-form-element/compare/v10.6.0...v10.6.1) (2022-06-21)
 
 
