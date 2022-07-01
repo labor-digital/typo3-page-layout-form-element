@@ -27,7 +27,6 @@ use LaborDigital\T3ba\ExtConfig\SiteBased\SiteConfigContext;
 use LaborDigital\T3fa\ExtConfigHandler\Api\ApiBundleInterface;
 use LaborDigital\T3fa\ExtConfigHandler\Api\ApiConfigurator;
 use LaborDigital\T3fa\ExtConfigHandler\Api\Resource\ResourceCollector;
-use LaborDigital\T3plfe\Api\Resource\DummyResource;
 use LaborDigital\T3plfe\Api\Resource\PageLayoutResource;
 
 class PageLayoutBundle implements ApiBundleInterface
@@ -38,7 +37,6 @@ class PageLayoutBundle implements ApiBundleInterface
     public static function registerResources(ResourceCollector $collector, SiteConfigContext $context, array $options): void
     {
         $collector->register(PageLayoutResource::class);
-        $collector->register(DummyResource::class);
     }
     
     /**
