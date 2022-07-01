@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [10.6.3](https://github.com/labor-digital/typo3-page-layout-form-element/compare/v10.6.2...v10.6.3) (2022-07-01)
+
+
+### Bug Fixes
+
+* remove none exiting dummy ressource ([717b0c5](https://github.com/labor-digital/typo3-page-layout-form-element/commit/717b0c531e2daba000aa7eacf7eaa5cac8a4fa94))
+
 ### [10.6.2](https://github.com/labor-digital/typo3-page-layout-form-element/compare/v10.6.1...v10.6.2) (2022-06-22)
 
 
